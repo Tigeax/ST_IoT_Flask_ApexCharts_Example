@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+
+<html>
+
+    <head>
+    
+        <title>Flask ApexChart Example</title>
+
+        <!-- Jquery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
+        <!-- ApexCharts Library -->
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    
+      </head>
+
+
+    <body>
+
+        <!-- An HTML element to contain our Graph -->
+        <div id="chart"></div>
+
+    </body>
+
+
+    <script>
+    
+        var chartOptions = {
+            title: {
+                text: 'Example graph',
+            },
+            chart: {
+                type: 'line',
+                width: '70%',
+                height: 400,
+            },
+            noData: {
+                text: 'Loading...'
+            },
+            series: [],
+            xaxis: {
+                type: 'datetime'
+            },
+        }
+        
+        chartHTMLElement = document.querySelector('#chart');
+    
+        var chart = new ApexCharts(chartHTMLElement, chartOptions);
+        chart.render();
+
+
+        function updateChartData() {
+            var dataUrl = '/chart_example_data';
+
+            $.getJSON(dataUrl, function(response) {
+                chart.updateSeries(response)
+            });
+        }
+
+        // Load the chart data on initial page load
+        updateChartData();
+
+        // Update the chart data every 1000 ms
+        window.setInterval(updateChartData, 1000);
+        
+    
+    </script>
+
+
+
+</html>
+
+
+
