@@ -2,7 +2,7 @@
 A small example script to show how to dynamically update a Graph from ApexCharts together with the Python Flask library
 
 ## Setup
-1. Make sure to use python version 3.#.#
+1. Make sure to use python version 3.9
 2. Create a new enviorment...
 
 
