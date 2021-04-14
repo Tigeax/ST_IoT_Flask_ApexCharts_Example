@@ -4,8 +4,10 @@ Python version used: 3.9.1
 
 ## Setup
 1. Create a new python environment: `python -m venv env` [More info on the venv library](https://docs.python.org/3/library/venv.html)
-2. Enter the environment: (windows) `./env/Scripts/activate` (mac/linux) `source env/bin/activate`
+2. Enter the environment: `./env/Scripts/activate` (windows) `source env/bin/activate` (mac/linux)
 3. Install required Python libraries: `pip install -r requirements.txt`
+4. Start the web server: `python run.py`
+5. Navigate to `http://127.0.0.1:5000/` in your browser
 
 
 

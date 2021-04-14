@@ -24,7 +24,8 @@
 
 
     <script>
-    
+        
+        // Options for the chart, see the ApexCharts documentation for all possible options
         var chartOptions = {
             title: {
                 text: 'Example graph',
@@ -43,30 +44,36 @@
             },
         }
         
+        // Get the HTML element we defined in the HTML above by it's ID
         chartHTMLElement = document.querySelector('#chart');
     
+        // Create the chart instance in the specified HTML element with the specified options
         var chart = new ApexCharts(chartHTMLElement, chartOptions);
+
+        // Show the chart
         chart.render();
 
 
+        // Function to fetch the chart datapoints from the server
         function updateChartData() {
+
             var dataUrl = '/chart_example_data';
 
             $.getJSON(dataUrl, function(response) {
                 chart.updateSeries(response)
             });
+
         }
 
+        
         // Load the chart data on initial page load
         updateChartData();
 
         // Update the chart data every 1000 ms
         window.setInterval(updateChartData, 1000);
         
-    
+
     </script>
-
-
 
 </html>
 

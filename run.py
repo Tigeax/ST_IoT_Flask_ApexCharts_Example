@@ -3,7 +3,7 @@ from flask import Flask, render_template, jsonify
 import datetime, random
 
 
-# Create the instance of our web application
+# Create the instance of our web application server
 app = Flask(__name__)
 
 
@@ -18,30 +18,50 @@ def landing_page():
 def chart_example_data():
     ''' Return data for a chart as JSON '''
 
-    # A list of dicts
-    measurementsData = [
+    # You might notice that the measurements and dataPoints variables have the same structure (list of dicts)
+    # In this example this is the case
+    # However depending on how you query your measurement data they might differer slightly. 
+    # So you have to make sure it is in the right format when parsing it to datapoints list.
+    # Which is why we recreate the list of data points
+
+    # A list of dicts containing the measurements
+    # This is what you should replace by your database query
+    # The result of the query should follow the same data format
+    measurements = [
         {'x': getDateTime1(), 'y': getRandomDataPoint()},
         {'x': getDateTime2(), 'y': getRandomDataPoint()},
         {'x': getDateTime3(), 'y': getRandomDataPoint()},
         {'x': getDateTime4(), 'y': getRandomDataPoint()}
     ]
 
-    measurements = []
+    # Create an empty list
+    dataPoints = []
 
-    for measurement in measurementsData:
-        info = {}
-        info['x'] = measurement['x']
-        info['y'] = measurement['y']
-        measurements.append(info)
+    # Loop through all the measurements
+    for measurement in measurements:
 
+        # Create an empty dict
+        dataPoint = {}
+
+        # Add the x and y values to the datapoint
+        dataPoint['x'] = measurement['x']
+        dataPoint['y'] = measurement['y']
+
+        # Add the datapoint to datapoints list
+        dataPoints.append(dataPoint)
+
+    # Create a list of a dict in the format that Apexcharts expect
+    # Name is the name of the data
+    # Data are the data points in the graph
     data = [{
         'name': 'testData',
         'data': measurements
         }]
 
-    #print(data)
+    # Convert the python list to a Response object with the application/json mimetype, so it can be send to the client over HTTP
+    jsonData = jsonify(data)
 
-    return jsonify(data)
+    return jsonData
 
 
 
@@ -61,10 +81,12 @@ def getDateTime3():
 def getDateTime4():
     return 1327618800000
 
-
+# Get a randomvalue between 1 and 10
 def getRandomDataPoint():
     return random.randint(1, 10)
 
 
+
 if __name__ == "__main__":
+    ''' Start the server '''
     app.run(debug=True)
